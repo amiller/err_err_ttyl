@@ -5,7 +5,7 @@ This project demonstrates how to create truly autonomous AI agents with provable
 
 https://nousresearch.com/setting-your-pet-rock-free/
 
-<a href="https://nousresearch.com/setting-your-pet-rock-free/"><img src="https://github.com/user-attachments/assets/c7f229c0-c96e-4498-9005-409ab7deddb8" width="25%"/></a>
+![Screenshot from 2024-10-30 02-19-46](https://github.com/user-attachments/assets/8e5eb59d-7ed6-4128-aa78-ca1967a480eb)
 
 ## Contents
 - [Contents](#contents)
