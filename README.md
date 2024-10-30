@@ -16,7 +16,7 @@ https://nousresearch.com/setting-your-pet-rock-free/
   - [Account Setup and Delegation Process](#account-setup-and-delegation-process)
   - [Security Features](#security-features)
 - [Development](#development)
-  - [Prerequisites](#prerequisites)
+  - [Requirements](#requirements)
   - [Quick Start](#quick-start)
   - [Current Limitations](#current-limitations)
 - [Important Links](#important-links)
@@ -64,8 +64,10 @@ https://nousresearch.com/setting-your-pet-rock-free/
 - **Timed Release**: 7-day recovery period for admin access
 
 ## Development
-### Prerequisites
+### Requirements
 - Intel TDX-compatible hardware
+  - Compatible BIOS version
+  - The Dstack framework for running confidential VMs
 - Docker
 - Cock.li email account
 - Twitter developer account
