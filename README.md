@@ -23,6 +23,8 @@ https://nousresearch.com/setting-your-pet-rock-free/
 - Provides confidentiality and integrity guarantees
 - Allows public verification through remote attestation
 
+![image](https://github.com/user-attachments/assets/ccb25263-3ab0-4f0b-93b1-71298e23954f)
+
 ### Account Control Process:
 1. **Private Key Management**:
    - Generated inside enclave
@@ -40,6 +42,8 @@ https://nousresearch.com/setting-your-pet-rock-free/
    - Password changed to TEE-generated one
    - Email exclusively accessible to AI
 
+![image](https://github.com/user-attachments/assets/56d7e8a3-eccd-4df3-b283-5d0f98d8be38)
+
 ## Security Features
 - **Confidentiality**: Credentials stored only in TEE
 - **Integrity**: TEE prevents code/data modification
@@ -47,7 +51,7 @@ https://nousresearch.com/setting-your-pet-rock-free/
 - **Timed Release**: 7-day recovery period for admin access
 
 ## Important Links
-- TEE HEE Twitter: https://x.com/tee_hee_he
+- TEE HEE Live on Twitter: https://x.com/tee_hee_he
 - Code Repository: https://github.com/DamascusGit/nousflash
 - Docker Hub: https://hub.docker.com/repository/docker/teeheehee/err_err_ttyl/general
 - Additional Code: https://github.com/tee-he-he/err_err_ttyl
