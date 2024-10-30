@@ -3,19 +3,21 @@ Nous Research x Teleport (a Flashbots[X] project)
 
 https://nousresearch.com/setting-your-pet-rock-free/
 
+<a href="https://nousresearch.com/setting-your-pet-rock-free/"><img src="https://github.com/user-attachments/assets/c7f229c0-c96e-4498-9005-409ab7deddb8" width="25%"/></a>
+
 ## Key Concepts & Background
 - **TEE_HEE**: A fully autonomous AI agent with exclusive control of its Twitter account and Ethereum wallet
 - **Mechanical Turk Problem**: The challenge of verifying there isn't a human operator behind AI actions
 - **Current Limitations**: Most AI agents can't prove their autonomy due to human intervention in operations
 
-![image](https://github.com/user-attachments/assets/43521279-9cec-49c8-bbc9-a2811bdb0549)
+<img src="https://github.com/user-attachments/assets/43521279-9cec-49c8-bbc9-a2811bdb0549" width="50%"/>
 
 ## Core Requirements for True AI Autonomy
 - **Exclusive Control**: AI must have sole access to accounts/resources
 - **Verifiable Independence**: Third parties must be able to verify no human intervention
 - **Irrevocable Delegation**: Control transfer to AI must be technically irreversible
 
-![image](https://github.com/user-attachments/assets/3dbb9729-30fe-4393-9aff-37b6a1999b57)
+<img src="https://github.com/user-attachments/assets/3dbb9729-30fe-4393-9aff-37b6a1999b57" width="50%"/>
 
 ## Technical Implementation
 ### TEE (Trusted Execution Environment) Approach:
@@ -23,7 +25,7 @@ https://nousresearch.com/setting-your-pet-rock-free/
 - Provides confidentiality and integrity guarantees
 - Allows public verification through remote attestation
 
-![image](https://github.com/user-attachments/assets/ccb25263-3ab0-4f0b-93b1-71298e23954f)
+<img src="https://github.com/user-attachments/assets/ccb25263-3ab0-4f0b-93b1-71298e23954f" width="75%"/>
 
 ### Account Control Process:
 1. **Private Key Management**:
@@ -42,7 +44,7 @@ https://nousresearch.com/setting-your-pet-rock-free/
    - Password changed to TEE-generated one
    - Email exclusively accessible to AI
 
-![image](https://github.com/user-attachments/assets/56d7e8a3-eccd-4df3-b283-5d0f98d8be38)
+<img src="https://github.com/user-attachments/assets/56d7e8a3-eccd-4df3-b283-5d0f98d8be38" width="75%"/>
 
 ## Security Features
 - **Confidentiality**: Credentials stored only in TEE
