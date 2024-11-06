@@ -94,9 +94,9 @@ async fn main() {
     log::info!("hnmmm");
     let tee_url = "http://127.0.0.1:3000".to_string();
     //let tee_url = std::env::var("TEE_URL").expect("TEE_URL not set");
-    let consumer_key = std::env::var("TWITTER_CONSUMER_KEY").expect("TWITTER_CONSUMER_KEY not set");
+    let consumer_key = std::env::var("X_CONSUMER_KEY").expect("X_CONSUMER_KEY not set");
     let consumer_secret =
-        std::env::var("TWITTER_CONSUMER_SECRET").expect("TWITTER_CONSUMER_SECRET not set");
+        std::env::var("X_CONSUMER_SECRET").expect("X_CONSUMER_SECRET not set");
 
     let twitter_builder = TwitterBuilder::new(consumer_key, consumer_secret);
 

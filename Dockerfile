@@ -37,6 +37,7 @@ WORKDIR /workdir
 
 COPY nousflash-agents/agent/ ./agent/
 COPY run.sh ./
+COPY refresh.sh ./
 COPY run.py ./
 COPY timerelease.sh ./
 

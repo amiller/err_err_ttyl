@@ -15,7 +15,7 @@ import json
 
 TWITTER_ACCOUNT=os.getenv("X_USERNAME")
 if not TWITTER_ACCOUNT:
-    raise ValueError("TWITTER_ACCOUNT not found in .env file")
+    raise ValueError("X_USERNAME not found in .env file")
 
 
 BASE_URL = "http://127.0.0.1:3000"
@@ -60,7 +60,7 @@ input_field = WebDriverWait(driver, 10).until(
     )
 )
 
-if input_field.get_attribute('autocomplete') == 'on':
+if not input_field.get_attribute('name') == 'password':
     # Handle email field
     print("Found email field", sys=stderr)
     input_field.send_keys(X_EMAIL)
