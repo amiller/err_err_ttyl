@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  teeheehee:
+    image: teeheehee/err_err_ttyl
+    volumes:
+      - /var/run/tappd.sock:/var/run/tappd.sock
+      - /tmp/tapp-ramdisk:/tmp/tapp-ramdisk
+    ports:
+      - "5001:5001"
+    environment:
+      - X_USERNAME=HennCamy
+      - SQLITE_DB_PATH="./data/agents.db"
+  replicatoor:
+    image: socrates1024/replicatoor
+    volumes:
+      - /var/run/tappd.sock:/var/run/tappd.sock
+      - /tmp/tapp-ramdisk:/tmp/tapp-ramdisk
+    ports:
+      - "4001:4001"
+    environment:
+      - SECURE_FILE=/tmp/tapp-ramdisk/private.env
+      - CONTRACT=0x2c5032c6b1ec3d13acc81758d83e0b4478e153ff
+      - ETH_RPC_URL=https://base-mainnet.g.alchemy.com/v2/
+      - CHAIN_ID=8453
+

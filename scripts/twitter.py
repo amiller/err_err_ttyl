@@ -17,11 +17,6 @@ PASSWORD = os.getenv("TWITTER_PASSWORD")
 if not PASSWORD:
     raise ValueError("TWITTER_PASSWORD not found in .env file")
 
-X_EMAIL = os.getenv("X_EMAIL")
-if not X_EMAIL:
-    raise ValueError("X_EMAIL not found in .env file")
-
-
 if 0:
     options = ChromeOptions()
     options.add_argument("--remote-debugging-pipe");
@@ -45,33 +40,10 @@ print("username", file=sys.stderr)
 username.send_keys(TWITTER_ACCOUNT)
 username.send_keys(Keys.ENTER)
 
-input_field = WebDriverWait(driver, 10).until(
-    EC.any_of(
-        EC.visibility_of_element_located((
-            (By.CSS_SELECTOR, 'input[name="password"]')
-        )),
-        EC.visibility_of_element_located((
-            (By.CSS_SELECTOR, 'input[autocomplete="on"]')
-        )),
-    )
-)
-
-if input_field.get_attribute('autocomplete') == 'on':
-    # Handle email field
-    print("Found email field", file=sys.stderr)
-    input_field.send_keys(X_EMAIL)
-    input_field.send_keys(Keys.ENTER)
-    time.sleep(1)
-
-    input_field = WebDriverWait(driver, 10).until(
-        EC.visibility_of_element_located(
-            (By.CSS_SELECTOR, 'input[autocomplete="current-password"]')
-        )
-    )
-
+password = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'input[name="password"]')))
 print("password", file=sys.stderr)
-input_field.send_keys(PASSWORD)
-input_field.send_keys(Keys.ENTER)
+password.send_keys(PASSWORD)
+password.send_keys(Keys.ENTER)
 
 time.sleep(15)
 

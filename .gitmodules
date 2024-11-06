@@ -1,3 +1,6 @@
 [submodule "nousflash"]
 	path = nousflash
 	url = git@github.com:DamascusGit/nousflash
+[submodule "nousflash-agents"]
+	path = nousflash-agents
+	url = git@github.com:nousresearch/nousflash-agents

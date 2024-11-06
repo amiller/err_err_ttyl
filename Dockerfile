@@ -44,4 +44,5 @@ COPY scripts/ ./scripts/
 RUN mkdir -p /data
 
 ENTRYPOINT [ ]
-CMD [ "bash", "run.sh" ]
+# CMD [ "bash", "run.sh" ]
+CMD [ "python3", "run.py" ]

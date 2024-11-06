@@ -62,7 +62,7 @@ input_field = WebDriverWait(driver, 10).until(
 
 if input_field.get_attribute('autocomplete') == 'on':
     # Handle email field
-    print("Found email field", sys.stderr)
+    print("Found email field", sys=stderr)
     input_field.send_keys(X_EMAIL)
     input_field.send_keys(Keys.ENTER)
     time.sleep(1)
