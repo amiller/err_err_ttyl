@@ -31,13 +31,14 @@ WORKDIR /workdir
 
 # Copy the real files
 COPY client/ ./client/
-COPY nousflash/agent/ ./agent/
-COPY run.sh ./
-COPY timerelease.sh ./
-
 WORKDIR client/
 RUN cargo build --release
 WORKDIR /workdir
+
+COPY nousflash-agents/agent/ ./agent/
+COPY run.sh ./
+COPY run.py ./
+COPY timerelease.sh ./
 
 COPY scripts/ ./scripts/
 

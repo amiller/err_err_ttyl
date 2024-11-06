@@ -10,6 +10,7 @@ services:
     environment:
       - X_USERNAME=HennCamy
       - SQLITE_DB_PATH="./data/agents.db"
+      - SECURE_FILE=/tmp/tapp-ramdisk/private.env
   replicatoor:
     image: socrates1024/replicatoor
     volumes:

@@ -2,8 +2,9 @@ set -x
 set -e
 
 # Load everything from the private.env
+cat $SECURE_FILE
 set -a
-. $SECURE_FILE
+# . $SECURE_FILE
 set +a
 
 # Try to fetch a quote
@@ -25,11 +26,11 @@ curl -X POST --unix-socket /var/run/tappd.sock -d "$PAYLOAD" http://localhost/pr
 # wait $SERVER
 
 # Update the environment variables
-. client/updated.env
-export X_ACCESS_TOKEN
-export X_ACCESS_TOKEN_SECRET
-[
-# Run the nous
+#. client/updated.env
+#export X_ACCESS_TOKEN
+#export X_ACCESS_TOKEN_SECRET
+
+# Run the nous agent
 pushd agent
 python3 run_pipeline.py
 popd
