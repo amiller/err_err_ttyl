@@ -1,12 +1,6 @@
 set -x
 set -e
 
-# Load everything from the private.env
-cat $SECURE_FILE
-set -a
-# . $SECURE_FILE
-set +a
-
 # Try to fetch a quote
 # The argument report_data accepts binary data encoding in hex string.
 # The actual report_data passing the to the underlying TDX driver is sha2_256(report_data).
