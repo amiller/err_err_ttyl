@@ -15,7 +15,7 @@ PASSWORD = os.getenv("PROTONMAIL_PASSWORD")
 if not PASSWORD:
     raise ValueError("PROTONMAIL_PASSWORD not found in .env file")
 
-EMAIL = os.getenv("PROTONMAIL_EMAIL")
+EMAIL = os.getenv("X_EMAIL")
 if not PASSWORD:
     raise ValueError("PROTONMAIL_EMAIL not found in .env file")
 

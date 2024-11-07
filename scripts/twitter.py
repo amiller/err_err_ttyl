@@ -11,11 +11,11 @@ from selenium.webdriver.support.wait import WebDriverWait
 import random
 from dotenv import load_dotenv
 
-TWITTER_ACCOUNT=os.environ["TWITTER_ACCOUNT"]
+TWITTER_ACCOUNT=os.environ["X_USERNAME"]
 
-PASSWORD = os.getenv("TWITTER_PASSWORD")
+PASSWORD = os.getenv("X_PASSWORD")
 if not PASSWORD:
-    raise ValueError("TWITTER_PASSWORD not found in .env file")
+    raise ValueError("X_PASSWORD not found in .env file")
 
 if 0:
     options = ChromeOptions()

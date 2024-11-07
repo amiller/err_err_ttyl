@@ -16,3 +16,4 @@ twitter-api-client
 twitter_openapi_python
 flask
 requests
+psutil

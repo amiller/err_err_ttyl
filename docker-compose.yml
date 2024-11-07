@@ -12,7 +12,7 @@ services:
       - SQLITE_DB_PATH="./data/agents.db"
       - SECURE_FILE=/tmp/tapp-ramdisk/private.env
   replicatoor:
-    image: socrates1024/replicatoor@sha256:85653ee1890ef367f1bdef89b2f24a0fc01341119cd0e08e79810d8fd82927da
+    image: socrates1024/replicatoor@sha256:a340461bf0a9f6593493b4453dbf83d044317935a7870439199f6630810bb32a
     volumes:
       - /var/run/tappd.sock:/var/run/tappd.sock
       - /tmp/tapp-ramdisk:/tmp/tapp-ramdisk
