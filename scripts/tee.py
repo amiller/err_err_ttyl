@@ -79,10 +79,6 @@ input_field.send_keys(Keys.ENTER)
 
 time.sleep(5)
 
-url = "https://twitter.com/"
-driver.get(url)
-time.sleep(5)
-
 ct0 = driver.get_cookie("ct0")["value"]
 auth_token = driver.get_cookie("auth_token")["value"]
 with open('cookies.env','w') as f:
