@@ -34,7 +34,7 @@ options = ChromeOptions()
 options.add_argument("--start-maximized")
 options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--no-sandbox')
-driver = uc.Chrome(headless=True, use_subprocess=False, browser_executable_path='/usr/bin/chromium', options=options)
+driver = uc.Chrome(headless=True, use_subprocess=False, browser_executable_path='/usr/bin/chromium', options=options, version_main=130)
 
 url = "https://twitter.com/i/flow/login"
 driver.get(url)

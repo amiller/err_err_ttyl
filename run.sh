@@ -1,14 +1,31 @@
-set -x
 set -e
 
-# Try to fetch a quote
-# The argument report_data accepts binary data encoding in hex string.
-# The actual report_data passing the to the underlying TDX driver is sha2_256(report_data).
+LOG_FILE="/var/log/payload_stderr.log"
+ROTATE_INTERVAL=20m
 
-PAYLOAD="{\"report_data\": \"$(echo -n $X_USERNAME | od -A n -t x1 | tr -d ' \n')\"}"
-curl -X POST --unix-socket /var/run/tappd.sock -d "$PAYLOAD" http://localhost/prpc/Tappd.TdxQuote?json | jq .
+# Rotate on an interval
+echo "START" > /var/log/payload_lasthash
+(
+    while true; do
+	sleep $ROTATE_INTERVAL
+	echo "Calling logrotate"
+	logrotate logrotate.conf
+    done
+) &
+
+generate_stderr_output() {
+  local line="Sample log entry"
+  local iterations=12000
+  local delay=1
+
+  for ((i = 1; i <= iterations; i++)); do
+      printf "%s\n" "$line" >&2
+      sleep "$delay"
+  done
+}
 
 # Run the nous agent
 pushd agent
-python3 run_pipeline.py
+python3 run_pipeline.py  2>&1 | tee -a "$LOG_FILE"
+#generate_stderr_output  2>&1 | tee -a "$LOG_FILE"
 popd

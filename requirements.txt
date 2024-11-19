@@ -17,3 +17,5 @@ twitter_openapi_python
 flask
 requests
 psutil
+azure-storage-blob
+

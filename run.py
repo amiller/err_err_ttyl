@@ -39,6 +39,7 @@ def configure():
 
     print('Received configuration parameters:', config.keys(),
           file=sys.stderr)
+    os.environ['AZURE_BLOB_STRING'] = config['AZURE_BLOB_STRING']
     os.environ['HYPERBOLIC_API_KEY'] = config['HYPERBOLIC_API_KEY']
     os.environ['OPENROUTER_API_KEY'] = config['OPENROUTER_API_KEY']
     os.environ['OPENAI_API_KEY'] = config['OPENAI_API_KEY']

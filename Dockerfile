@@ -12,13 +12,16 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 RUN apt-get install -y pkg-config libssl-dev
-RUN apt-get install -y jq
+RUN apt-get install -y jq logrotate
+
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 WORKDIR /workdir
 ENV PYTHONUNBUFFERED=1
 
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
+
 
 # Build just the dependencies (shorcut)
 RUN mkdir client
@@ -39,6 +42,10 @@ COPY nousflash-agents/agent/ ./agent/
 COPY run.sh ./
 COPY refresh.sh ./
 COPY run.py ./
+COPY redacter.py ./
+COPY logrotate-post.sh ./
+COPY logrotate.conf ./
+RUN chmod 0644 logrotate.conf
 
 COPY scripts/ ./scripts/
 
