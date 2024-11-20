@@ -25,7 +25,8 @@ generate_stderr_output() {
 }
 
 # Run the nous agent
-pushd agent
-python3 run_pipeline.py  2>&1 | tee -a "$LOG_FILE"
+pushd /app
+#python3 run_pipeline.py  2>&1 | tee -a "$LOG_FILE"
+pnpm start  2>&1 | tee -a "$LOG_FILE"
 #generate_stderr_output  2>&1 | tee -a "$LOG_FILE"
 popd

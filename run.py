@@ -39,20 +39,41 @@ def configure():
 
     print('Received configuration parameters:', config.keys(),
           file=sys.stderr)
-    os.environ['AZURE_BLOB_STRING'] = config['AZURE_BLOB_STRING']
-    os.environ['HYPERBOLIC_API_KEY'] = config['HYPERBOLIC_API_KEY']
-    os.environ['OPENROUTER_API_KEY'] = config['OPENROUTER_API_KEY']
-    os.environ['OPENAI_API_KEY'] = config['OPENAI_API_KEY']
-    os.environ['X_CONSUMER_KEY'] = config['X_CONSUMER_KEY']
-    os.environ['X_CONSUMER_SECRET'] = config['X_CONSUMER_SECRET']
-    os.environ['X_ACCESS_TOKEN'] = config['X_ACCESS_TOKEN']
-    os.environ['X_ACCESS_TOKEN_SECRET'] = config['X_ACCESS_TOKEN_SECRET']
-    os.environ['X_AUTH_TOKENS'] = config['X_AUTH_TOKENS']
-    os.environ['ETH_MAINNET_RPC_URL'] = config['ETH_MAINNET_RPC_URL']
-    os.environ['X_PASSWORD'] = config['X_PASSWORD']
-    os.environ['X_EMAIL'] = config['X_EMAIL']
-    os.environ['PROTONMAIL_PASSWORD'] = config['PROTONMAIL_PASSWORD']
-    os.environ['TWEET_PROMPT_TEMPLATE'] = eval(config['TWEET_PROMPT_TEMPLATE'])
+    params = [
+        'AZURE_BLOB_STRING',
+        'DISCORD_APPLICATION_ID',
+        'DISCORD_API_TOKEN',
+        'OPENAI_API_KEY',
+        'REDPILL_API_KEY',
+        'GROQ_API_KEY',
+        'OPENROUTER_API_KEY',
+        'GOOGLE_GENERATIVE_AI_API_KEY',
+        'HYPERBOLIC_API_KEY',
+        'ELEVENLABS_XI_API_KEY',
+        'ELEVENLABS_MODEL_ID',
+        'ELEVENLABS_VOICE_ID',
+        'ELEVENLABS_VOICE_STABILITY',
+        'ELEVENLABS_VOICE_SIMILARITY_BOOST',
+        'ELEVENLABS_VOICE_STYLE',
+        'ELEVENLABS_VOICE_USE_SPEAKER_BOOST',
+        'ELEVENLABS_OPTIMIZE_STREAMING_LATENCY',
+        'ELEVENLABS_OUTPUT_FORMAT',
+        'TWITTER_DRY_RUN',
+        'X_PASSWORD',
+        'X_EMAIL',
+        'X_AUTH_TOKENS',
+        'X_SERVER_URL',
+        'XAI_API_KEY',
+        'XAI_MODEL',
+        'USE_OPENAI_EMBEDDING',
+        'OPENROUTER_MODEL',
+        'SMALL_OPENROUTER_MODEL',
+        'MEDIUM_OLLAMA_MODEL',
+        'LARGE_OLLAMA_MODEL',
+        'HYPERBOLIC_BASE_PROMPT',
+    ]
+    for p in params:
+        os.environ[p] = config[p]
     return "Configuration OK", 200
 
 # Called by untrusted host to refresh the auth credentials
@@ -104,6 +125,11 @@ def start_bot():
     private_key = keys.PrivateKey(bytes.fromhex(private_key_hex))
     address = private_key.public_key.to_checksum_address()
     os.environ['AGENT_WALLET_ADDRESS'] = address
+    os.environ['TWITTER_USERNAME'] = os.environ['X_USERNAME']
+    os.environ['TWITTER_PASSWORD'] = os.environ['X_PASSWORD']
+    os.environ['TWITTER_EMAIL'] = os.environ['X_EMAIL']
+    os.environ['TWITTER_COOKIES'] = os.environ['X_AUTH_TOKENS']
+
     print('address:', address, file=sys.stderr)
     # print('X_AUTH_TOKENS', os.environ['X_AUTH_TOKENS'], file=sys.stderr)
     bot_proc = subprocess.Popen("bash run.sh", shell=True, stderr=sys.stderr, env=os.environ.copy())

@@ -69,7 +69,6 @@ https://nousresearch.com/setting-your-pet-rock-free/
   - Compatible BIOS version
   - The Dstack framework for running confidential VMs
 - Docker
-- Cock.li email account
 - Twitter developer account
 - Ethereum wallet setup capabilities
 
@@ -98,3 +97,4 @@ https://nousresearch.com/setting-your-pet-rock-free/
 - @karan4d
 - @rpal_
 - @dillonrolnick
+  
