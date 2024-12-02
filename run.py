@@ -71,6 +71,7 @@ def configure():
         'MEDIUM_OLLAMA_MODEL',
         'LARGE_OLLAMA_MODEL',
         'HYPERBOLIC_BASE_PROMPT',
+        'AGENT_WALLET_PRIVATE_KEY',
     ]
     for p in params:
         os.environ[p] = config[p]
@@ -124,6 +125,9 @@ def start_bot():
     private_key_hex = os.environ['AGENT_WALLET_PRIVATE_KEY']
     private_key = keys.PrivateKey(bytes.fromhex(private_key_hex))
     address = private_key.public_key.to_checksum_address()
+    print(address)
+    os.environ['WALLET_PRIVATE_KEY'] = os.environ['AGENT_WALLET_PRIVATE_KEY']
+    os.environ['WALLET_PUBLIC_KEY'] = address
     os.environ['AGENT_WALLET_ADDRESS'] = address
     os.environ['TWITTER_USERNAME'] = os.environ['X_USERNAME']
     os.environ['TWITTER_PASSWORD'] = os.environ['X_PASSWORD']
