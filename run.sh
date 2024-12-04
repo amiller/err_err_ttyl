@@ -1,7 +1,6 @@
 set -e
 
-LOG_FILE="/var/log/payload_stderr.log"
-ROTATE_INTERVAL=20m
+ROTATE_INTERVAL=1m
 
 # Rotate on an interval
 echo "START" > /var/log/payload_lasthash
@@ -9,7 +8,7 @@ echo "START" > /var/log/payload_lasthash
     while true; do
 	sleep $ROTATE_INTERVAL
 	echo "Calling logrotate"
-	logrotate logrotate.conf
+	bash logrotate-post.sh
     done
 ) &
 
@@ -26,7 +25,5 @@ generate_stderr_output() {
 
 # Run the nous agent
 pushd /app
-#python3 run_pipeline.py  2>&1 | tee -a "$LOG_FILE"
-pnpm start  2>&1 | tee -a "$LOG_FILE"
-#generate_stderr_output  2>&1 | tee -a "$LOG_FILE"
+pnpm dev  2>&1 | tee -a "$LOG_FILE"
 popd

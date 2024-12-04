@@ -71,7 +71,20 @@ def configure():
         'MEDIUM_OLLAMA_MODEL',
         'LARGE_OLLAMA_MODEL',
         'HYPERBOLIC_BASE_PROMPT',
+        'HYPERBOLIC_REPLY_PROMPT',
         'AGENT_WALLET_PRIVATE_KEY',
+        'ANTHROPIC_API_KEY',
+        'GLIF_API_KEY',
+        'BIRDEYE_API_KEY',
+        'SOL_ADDRESS',
+        'SLIPPAGE',
+        'BASE_MINT',
+        'RPC_URL',
+        'HELIUS_API_KEY',
+        'TELEGRAM_BOT_TOKEN',
+        'TOGETHER_API_KEY',
+        'SERVER_PORT',
+        'LOG_INTERVAL'
     ]
     for p in params:
         os.environ[p] = config[p]

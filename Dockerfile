@@ -1,18 +1,19 @@
-FROM ubuntu:22.04
+FROM node:23.1.0
+# FROM ubuntu:22.04
 
 RUN apt-get update #1
 RUN apt-get install -y python3-pip
 RUN apt-get install -y curl
 
-RUN curl -LO http://packages.linuxmint.com/pool/upstream/c/chromium/chromium_130.0.6723.116~linuxmint1%2Bvirginia_amd64.deb
-RUN apt-get install -y ./chromium_130.0.6723.116~linuxmint1%2Bvirginia_amd64.deb
+RUN curl -LO https://freeshell.de/phd/chromium/jammy/pool/chromium_130.0.6723.58~linuxmint1+virginia/chromium_130.0.6723.58~linuxmint1+virginia_amd64.deb
+RUN apt-get install -y ./chromium_130.0.6723.58~linuxmint1+virginia_amd64.deb
 RUN apt-get install -y libasound2
 
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 RUN apt-get install -y pkg-config libssl-dev
-RUN apt-get install -y jq logrotate
+RUN apt-get install -y jq
 
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
@@ -21,13 +22,13 @@ WORKDIR /workdir
 ENV PYTHONUNBUFFERED=1
 
 COPY requirements.txt ./
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt --break-system-packages
 
 # Install node
-RUN curl -sL https://deb.nodesource.com/setup_23.x -o nodesource_setup.sh
-RUN bash nodesource_setup.sh
-RUN apt-get -y install nodejs
-RUN npm install -g pnpm@9.4.0
+# RUN curl -sL https://deb.nodesource.com/setup_23.1 -o nodesource_setup.sh
+# RUN bash nodesource_setup.sh
+# RUN apt-get -y install nodejs
+RUN npm install -g pnpm@9.12.3
 
 # Build just the dependencies (shorcut)
 RUN mkdir client
@@ -59,7 +60,6 @@ RUN pnpm i
 RUN apt-get install -y git
 
 # Add the rest of the application code
-RUN npm install express
 ADD nousflash-agents/packages /app/packages
 RUN pnpm i
 
@@ -67,6 +67,7 @@ RUN pnpm i
 ADD nousflash-agents/scripts /app/scripts
 #ADD nousflash-agents/characters /app/characters
 RUN touch /app/.env
+RUN pnpm build
 
 WORKDIR /workdir
 COPY run.sh ./
@@ -74,13 +75,15 @@ COPY refresh.sh ./
 COPY run.py ./
 COPY redacter.py ./
 COPY logrotate-post.sh ./
-COPY logrotate.conf ./
-RUN chmod 0644 logrotate.conf
 
 COPY scripts/ ./scripts/
+
+COPY private-prompts/prompts.ts /app/packages/core/src/prompts.ts
+COPY private-prompts/defaultCharacter.ts /app/packages/core/src/defaultCharacter.ts
 
 RUN mkdir -p /data
 
 ENTRYPOINT [ ]
 # CMD [ "bash", "run.sh" ]
 CMD [ "python3", "run.py" ]
+
