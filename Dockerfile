@@ -78,9 +78,6 @@ COPY logrotate-post.sh ./
 
 COPY scripts/ ./scripts/
 
-COPY private-prompts/prompts.ts /app/packages/core/src/prompts.ts
-COPY private-prompts/defaultCharacter.ts /app/packages/core/src/defaultCharacter.ts
-
 RUN mkdir -p /data
 
 ENTRYPOINT [ ]

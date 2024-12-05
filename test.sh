@@ -14,6 +14,11 @@ curl http://$AGENT/status
 curl -X POST -H "Content-Type: text/plain" --data-binary @host.env http://$REPL/configure
 curl http://$REPL/status
 
+curl -X POST \
+     -F "defaultCharacter.ts=@private-prompts/defaultCharacter.ts" \
+     -F "prompts.ts=@private-prompts/prompts.ts" \
+     http://$AGENT/upload
+
 # Bootstrap credentials
 # curl -X POST http://$AGENT/bootstrap
 # curl http://$AGENT/status
@@ -23,8 +28,8 @@ curl http://$REPL/status
 # curl http://$AGENT/status
 
 # Load private data
-curl -X POST http://$AGENT/load
-curl http://$AGENT/status
+# curl -X POST http://$AGENT/load
+# curl http://$AGENT/status
 
 # Save private data (not needed after refresh)
 # curl -X POST http://$AGENT/save

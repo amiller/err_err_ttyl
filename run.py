@@ -31,7 +31,16 @@ def load_dotenv(data):
 def bootstrap():
     os.environ['AGENT_WALLET_PRIVATE_KEY'] = os.urandom(32).hex()
     return "OK", 200
+
+@app.route('/upload', methods=['POST'])
+def upload_files():
+    file1 = request.files.get('defaultCharacter.ts')
+    file2 = request.files.get('prompts.ts')
+    open('/app/packages/core/src/defaultCharacter.ts','wb').write(file1.read())
+    open('/app/packages/core/src/prompts.ts','wb').write(file2.read())
+    return "OK", 200
     
+
 # Pass API keys and other arguments from the host
 @app.route('/configure', methods=['POST'])
 def configure():
