@@ -1,3 +1,5 @@
-.env
+*.env
 client/.DS_Store
 *~
+*.log
+*#

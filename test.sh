@@ -3,27 +3,26 @@ set -x
 set -e
 
 # Configure to the IP address of the container
-REPL=172.24.1.2:4001
 AGENT=172.24.1.3:5001
 
 # Configure the API keys from host.env
 curl -X POST -H "Content-Type: text/plain" --data-binary @host.env http://$AGENT/configure
 curl http://$AGENT/status
 
-# Configure the API keys
-curl -X POST -H "Content-Type: text/plain" --data-binary @host.env http://$REPL/configure
-curl http://$REPL/status
+# Configure the API keys on replicatoor
+curl -X POST -H "Content-Type: text/plain" --data-binary @host.env http://$AGENT/replicatoor/configure
+curl http://$AGENT/replicatoor/status
 
 curl -X POST \
      -F "defaultCharacter.ts=@private-prompts/defaultCharacter.ts" \
      -F "prompts.ts=@private-prompts/prompts.ts" \
      http://$AGENT/upload
 
-# Bootstrap credentials
+# Bootstrap credentials (generate new private key for wallet)
 # curl -X POST http://$AGENT/bootstrap
 # curl http://$AGENT/status
 
-# Refresh credentials
+# Refresh credentials (log in to twitter)
 # curl -X POST http://$AGENT/refresh
 # curl http://$AGENT/status
 

@@ -70,11 +70,8 @@ RUN touch /app/.env
 RUN pnpm build
 
 WORKDIR /workdir
-COPY run.sh ./
 COPY refresh.sh ./
 COPY run.py ./
-COPY redacter.py ./
-COPY logrotate-post.sh ./
 
 COPY scripts/ ./scripts/
 

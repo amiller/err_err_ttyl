@@ -49,7 +49,7 @@ def configure():
     print('Received configuration parameters:', config.keys(),
           file=sys.stderr)
     params = [
-        'AZURE_BLOB_STRING',
+        'AZURE_BLOB_CONNECTION_STRING',
         'DISCORD_APPLICATION_ID',
         'DISCORD_API_TOKEN',
         'OPENAI_API_KEY',
@@ -158,7 +158,7 @@ def start_bot():
 
     print('address:', address, file=sys.stderr)
     # print('X_AUTH_TOKENS', os.environ['X_AUTH_TOKENS'], file=sys.stderr)
-    bot_proc = subprocess.Popen("bash run.sh", shell=True, stderr=sys.stderr, env=os.environ.copy())
+    bot_proc = subprocess.Popen("pnpm start", shell=True, stderr=sys.stderr, env=os.environ.copy(), cwd="/app")
     return "OK", 200
 
 @app.route('/stop_bot', methods=['POST'])
@@ -186,6 +186,24 @@ def encumber():
     os.environ['X_PASSWORD'] = X_PASSWORD
     save()
     return "Encumbered account", 200
+
+
+# Wrappers for replicatoor
+# TODO: handle authentication
+@app.route('/replicatoor/<path:subpath>', methods=['GET', 'POST']) 
+def replicatoor_proxy(subpath):
+    # TODO: generalize
+    url = f"http://replicatoor:4001/{subpath}"
+    # Forward all request data exactly as received
+    resp = requests.request(
+        method=request.method,
+        url=url,
+        headers={k:v for k,v in request.headers if k != 'Host'},
+        data=request.get_data(),
+        cookies=request.cookies,
+        allow_redirects=False
+    )
+    return resp.content, resp.status_code
 
 @app.errorhandler(404)
 def not_found(e):
