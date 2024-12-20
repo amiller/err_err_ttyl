@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        #links {
+            flex: 1;
+            overflow-y: auto;
+            background: #f4f4f4;
+            padding: 10px;
+            border-right: 1px solid #ccc;
+        }
+        #viewer {
+            flex: 3;
+            overflow-y: auto;
+            padding: 10px;
+            border-left: 1px solid #ccc;
+            background: #fff;
+	    white-space: pre-wrap;
+	    overflow-wrap: break-word;
+        }
+        .container {
+            display: flex;
+            flex: 1;
+        }
+        a {
+            display: block;
+            margin: 5px 0;
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Log Viewer</h1>
+    </header>
+    <div class="container">
+      <div id="links"></div>
+      <div id="viewer" style="white-space: pre-wrap; font-family: monospace; overflow-y: auto; padding: 10px; border-left: 1px solid #ccc; background: #fff;">
+	Select a log to view its contents here.
+      </div>
+    </div>
+
+    <script>
+      // Get URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      // Default URL or from parameter
+      const baseUrl = urlParams.get('baseUrl') || 'https://teleport1.blob.core.windows.net/agent-sanitized-logs';
+      
+      // URL to fetch the XML file from
+      const xmlUrl = `${baseUrl}?restype=container&comp=list`;
+
+      // DOM Elements
+      const linksContainer = document.getElementById('links');
+      const viewer = document.getElementById('viewer');
+
+      // Fetch and process the XML file
+      fetch(xmlUrl)
+    .then(response => response.text())
+    .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+    .then(xml => {
+        const blobs = xml.getElementsByTagName('Blob');
+        for (let blob of blobs) {
+            const name = blob.getElementsByTagName('Name')[0].textContent;
+            const url = blob.getElementsByTagName('Url')[0].textContent;
+
+            // Create a link for each log file
+            const link = document.createElement('a');
+            link.href = '#';
+            link.textContent = name;
+            link.onclick = (e) => {
+                e.preventDefault();
+                loadLog(url);
+            };
+            linksContainer.appendChild(link);
+        }
+    })
+    .catch(err => console.error('Error fetching or processing XML:', err));
+
+
+      function parseAnsiToHtml(text) {
+	  const ansiRegex = /\x1b\[(\d+(?:;\d+)*)m/g;
+	  const newlineRegex = /\n/g;
+	  let result = '';
+	  let lastIndex = 0;
+	  let openSpans = [];
+	  let currentStyles = [];
+
+	  const ansiStyles = {
+              0: '</span>', // Reset / Normal
+              1: 'font-weight:bold;', // Bold
+              30: 'color:black;',
+              31: 'color:red;',
+              32: 'color:green;',
+              33: 'color:orange;',
+              34: 'color:blue;',
+              35: 'color:magenta;',
+              36: 'color:cyan;',
+              37: 'color:brown;',
+              90: 'color:grey;', // Bright Black
+              // Add more styles as needed
+	  };
+
+	  // Combined regex to match ANSI codes and newlines
+	  const combinedRegex = /(\x1b\[(\d+(?:;\d+)*)m)|(\n)/g;
+	  let match;
+	  while ((match = combinedRegex.exec(text)) !== null) {
+              // Append text before the matched sequence
+              result += escapeHtml(text.substring(lastIndex, match.index));
+              lastIndex = combinedRegex.lastIndex;
+
+              if (match[1]) {
+		  // ANSI escape code detected
+		  const codes = match[2].split(';').map(Number);
+		  for (const code of codes) {
+                      if (code === 0) {
+			  // Reset all styles
+			  while (openSpans.length > 0) {
+                              result += '</span>';
+                              openSpans.pop();
+			  }
+			  currentStyles = [];
+                      } else {
+			  const style = ansiStyles[code];
+			  if (style) {
+                              result += `<span style="${style}">`;
+                              openSpans.push('</span>');
+                              currentStyles.push(style);
+			  }
+                      }
+		  }
+              } else if (match[3]) {
+		  // Newline detected
+		  // Close all open spans before newline
+		  while (openSpans.length > 0) {
+                      result += '</span>';
+                      openSpans.pop();
+		  }
+		  result += '\n';
+		  // Reopen spans with current styles after newline
+		  for (const style of currentStyles) {
+                      result += `<span style="${style}">`;
+                      openSpans.push('</span>');
+		  }
+              }
+	  }
+	  // Append any remaining text
+	  result += escapeHtml(text.substring(lastIndex));
+
+	  // Close any remaining open spans at the end
+	  while (openSpans.length > 0) {
+              result += '</span>';
+              openSpans.pop();
+	  }
+
+	  return result;
+      }
+
+      // Helper function to escape HTML special characters
+      function escapeHtml(text) {
+	  const map = {
+              '&': '&amp;',
+              '<': '&lt;',
+              '>': '&gt;',
+              '"': '&quot;',
+              "'": '&#39;',
+	  };
+	  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+      }
+
+      
+      function loadLog(url) {
+	  viewer.innerHTML = 'Loading...'; // Use innerHTML to render styled text
+	  fetch(url)
+              .then(response => response.text())
+              .then(text => {
+		  const formattedText = parseAnsiToHtml(text);
+		  viewer.innerHTML = formattedText;
+              })
+              .catch(err => {
+		  viewer.textContent = 'Error loading log: ' + err;
+              });
+      }
+    </script>
+</body>
+</html>
